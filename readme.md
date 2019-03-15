@@ -17,7 +17,10 @@ Quick Installation:
   
  - composer install
  
+ - cp .env.example .env
+ 
  - create database and set the dbname in .env
+ 
   
  - php artisan migrate
  
