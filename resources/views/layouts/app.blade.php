@@ -65,9 +65,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if( Auth::user()->getRole() == 'User')
                                     <a class="dropdown-item" href="{{ route('mymovies.index') }}">
                                         {{ __('Mes Films') }}
                                     </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

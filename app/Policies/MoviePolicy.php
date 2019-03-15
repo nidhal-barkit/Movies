@@ -38,7 +38,7 @@ class MoviePolicy
      */
     public function create(User $user)
     {
-        //
+
     }
 
     /**

@@ -10,11 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/mymovies', 'MyMovieController');
+    Route::resource('/movies', 'MovieController');
+    Route::resource('/users', 'UserController');
+});
+
 Route::get('Usermovies/{user_id}', 'Api\v1\ApiMovieController@getUserMovies')->name('usermovies');
 Route::get('/', 'WelcomeController@index')->name('welcome');
-
 Auth::routes();
-Route::resource('/mymovies', 'MyMovieController');
-Route::resource('/movies', 'MovieController');
 
-Route::resource('/users', 'UserController');
