@@ -41,7 +41,7 @@
                             <td>@if($movie->published ==0)<span class="badge badge-danger">Non publié</span> @else <span class="badge badge-primary">Publié</span> @endif</td>
                             <td><b>{{$movie->getUserName()}}</b></td>
                             <td>
-                                <a href="/movies/{{$movie->id}}/edit"><button class="btn btn-primary">MÄJ</button></a>
+                                <a href="/movies/{{$movie->id}}/edit"><button class="btn btn-primary"> MÄJ</button></a>
                                 <form action="{{url('/movies/'.$movie->id)}}"  method="POST">
                                     @csrf
                                     @method('DELETE')
