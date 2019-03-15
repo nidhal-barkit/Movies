@@ -19,14 +19,17 @@ Quick Installation:
  
  - cp .env.example .env
  
+ - generate your key application if does not exist
+ 
  - create database and set the dbname in .env
  
-  
  - php artisan migrate
  
  - php artisan db:seed
  
  - Add Role 'User' in table roles
+ 
+ - set you virtual host
  
  - php artisan serve.
 
