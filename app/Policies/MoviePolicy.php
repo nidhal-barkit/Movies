@@ -36,9 +36,13 @@ class MoviePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user ,$ability)
     {
 
+        if ($user->getRole()=='Admin') {
+
+            return false;
+        }
     }
 
     /**

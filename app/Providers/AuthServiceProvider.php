@@ -29,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Gate::define('delete', 'App\Policies\MoviePolicy@delete');
         Gate::define('update', 'App\Policies\MoviePolicy@update');
+        Gate::define('create', 'App\Policies\MoviePolicy@create');
 
         //
     }

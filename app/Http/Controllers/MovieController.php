@@ -42,7 +42,10 @@ class MovieController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('movies.create', compact('types'));
+        if (Auth::user()->getRole() =='User'){
+            return view('movies.create', compact('types'));
+        }
+
     }
 
     public function store(Request $request)
