@@ -23,4 +23,8 @@ Quick Installation:
  
  - php artisan db:seed
  
+ - Add Role 'User' in table roles
+ 
  - php artisan serve.
+
+=> A User/Admin can login if his status is active
