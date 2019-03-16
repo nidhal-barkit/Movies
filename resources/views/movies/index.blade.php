@@ -40,23 +40,20 @@
                         <tbody>
                         @foreach($movies  as $movie)
                         <tr>
-
                             <td><img src="{{asset($movie->image)}}" width="80" height="80"> </td>
                             <td>{{$movie->title}}</td>
                             <td>{{$movie->year}}</td>
                             <td>@if($movie->published ==0)<span class="badge badge-danger">Non publié</span> @else <span class="badge badge-primary">Publié</span> @endif</td>
                             <td><b>{{$movie->getUserName()}}</b></td>
                             <td>
-                                <a href="/movies/{{$movie->id}}/edit"><button class="btn btn-primary"> MÄJ</button></a>
+                                <a href="/movies/{{$movie->id}}/edit"><button class="btn btn-primary">M Ä J</button></a>
                                 <form action="{{url('/movies/'.$movie->id)}}"  method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                     <input type="hidden" name="id" value="{{$movie->id}}">
                                 </form>
-
                             </td>
-
                         </tr>
                         @endforeach
                         </tbody>

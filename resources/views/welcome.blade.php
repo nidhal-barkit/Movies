@@ -10,7 +10,7 @@
         <!-- Styles -->
         <style>
             body {
-                background-color:#98e1b7 !important;
+                background-color:#000000 !important;
                 font-family: "Asap", sans-serif;
                 color:#989898;
                 margin:10px;
@@ -64,8 +64,10 @@
             .modal-footer{
                 display:none;
             }
-
-
+            #butt{
+                margin-top: 20px;
+                margin-right: 20px;
+            }
 
         </style>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -76,13 +78,13 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div style="text-align: right !important;" id="butt">
             @if (Route::has('login'))
                 <div class="pull-right">
                     @auth
                         <a href="{{ url('/movies') }}"><button class="btn btn-outline-light text-right">Films</button></a>
                     @else
-                        <a href="{{ route('login') }}"><button class="btn btn-outline-light text-right">Login</button></a>
+                        <a href="{{ route('login') }}"><button class="btn btn-outline-light  mr-4">Login</button></a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"><button class="btn btn-outline-light text-right">Register</button></a>
