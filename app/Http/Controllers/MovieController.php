@@ -114,9 +114,12 @@ class MovieController extends Controller
 
         if ($request->hasFile('image') != null) {
 
-            $url= explode('?', $movie->image);
-            $part1 = $url[0];
-            unlink(public_path($part1));
+            if ($movie->image != null){
+                $url= explode('?', $movie->image);
+                $part1 = $url[0];
+                unlink(public_path($part1));
+            }
+
 
             $idd = uniqid();
             $image = $request->file('image');
@@ -149,9 +152,12 @@ class MovieController extends Controller
 
         $this->authorize('delete' , $movie);
         $movie = Movie::where('id',$request->get('id'))->get()->first();
-        $url= explode('?', $movie->image);
-        $part1 = $url[0];
-        unlink(public_path($part1));
+        if ($movie->image != null){
+            $url= explode('?', $movie->image);
+            $part1 = $url[0];
+            unlink(public_path($part1));
+        }
+
         if($movie->delete())
         {
             $data =array(

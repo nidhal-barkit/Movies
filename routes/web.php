@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/movies', 'MovieController');
     Route::resource('/users', 'UserController');
     Route::get('/excel', 'ExcelController@export')->name('export');
+    Route::post('/import', 'ExcelController@import')->name('import');
 });
 
 Route::get('Usermovies/{user_id}', 'Api\v1\ApiMovieController@getUserMovies')->name('usermovies');

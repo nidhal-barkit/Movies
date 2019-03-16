@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('style')
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet" type="text/css">
 
 @endsection
 @section('content')
@@ -19,8 +17,9 @@
                 @endif
                     @if(Auth::user()->getRole() == "Admin")
                         <a href="/excel">
-                        <button type="button" class="btn btn-dark mb-2">Génerer un fichier excel</button>
+                        <button type="button" class="btn btn-dark mb-2">Export</button>
                         </a>
+                        <button type="button" class="btn btn-primary mb-2 ml-4" data-toggle="modal" data-target="#myModal">Import</button>
                     @endif
             </div>
 
@@ -74,6 +73,30 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                <div class="modal-body">
+                        <input type="file" name="file" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success">Import Excel File</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
