@@ -14,7 +14,9 @@ class ExcelController extends Controller
 
     public function export()
     {
-        return Excel::download(new MovieExport, 'movies-2019-'.uniqid().'.xlsx');
+
+        return Excel::download(new MovieExport, 'movies-2019.xlsx');
+
     }
 
 

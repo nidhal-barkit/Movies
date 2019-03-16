@@ -12,7 +12,9 @@ class MovieExport implements FromCollection
     */
     public function collection()
     {
-        $movie = Movie::join('users','users.id','=','movies.user_id')->select('year','title','users.name')->get();
+        $movie = Movie::join('users','users.id','=','movies.user_id')
+            ->select('year','title','users.name')->get();
         return $movie;
+
     }
 }
