@@ -13,10 +13,17 @@
                     <div class="alert alert-{{ $type }}">{{ $message }}</div>
                 @endforeach
             @endforeach
-            @if(Auth::user()->getRole() != "Admin")
-                <a href="/movies/create"> <button class="btn btn-primary mb-2">Ajouter un film</button></a>
-                <br>
-             @endif
+            <div class="row col-md-12">
+                @if(Auth::user()->getRole() != "Admin")
+                    <a href="/movies/create"> <button class="btn btn-primary mb-2">Ajouter un film</button></a>
+                @endif
+                    @if(Auth::user()->getRole() == "Admin")
+                        <a href="/excel">
+                        <button type="button" class="btn btn-dark mb-2">Génerer un fichier excel</button>
+                        </a>
+                    @endif
+            </div>
+
             <div class="card">
                 <div class="card-header">{{ __('Mes Films') }}</div>
                 <div class="card-body">
