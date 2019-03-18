@@ -19,7 +19,7 @@ class PhpSpreedSheetController extends Controller
         $filename = "movies";
 
         $rows = 2;
-        $types = Type::all();
+        $types = Type::all()->take(3);
 
         foreach($types as $t){
 
