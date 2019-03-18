@@ -20,14 +20,9 @@ class PhpSpreedSheetController extends Controller
 
         $rows = 2;
         $types = Type::all();
+
         foreach($types as $t){
 
-            $spreadsheet->setActiveSheetIndex(0);
-            $activeSheet = $spreadsheet->getActiveSheet();
-
-            $activeSheet->setCellValue('A1', 'Type');
-            $activeSheet->setCellValue('B1', 'Created_at');
-            $activeSheet->setCellValue('C1', 'Updated_at');
 
             $spreadsheet->createSheet();
             // Create a new worksheet called "My Data"
@@ -35,10 +30,31 @@ class PhpSpreedSheetController extends Controller
             // Attach the "My Data" worksheet as the first worksheet in the Spreadsheet object
             $spreadsheet->addSheet($myWorkSheet, 0);
 
-            $activeSheet->setCellValue('A2', $t['type']);
-            $activeSheet->setCellValue('B2', $t['created_at']);
-            $activeSheet->setCellValue('C2', $t['updated_at']);
+            $movies = Movie::join('movie_types','movie_types.movie_id','=','movies.id')
+                ->join('types','types.id','=','movie_types.type_id')
+                ->where('types.id','=',$t->id)->select('movies.*')->get();
 
+            foreach($movies as $movie) {
+
+                $spreadsheet->setActiveSheetIndex(0);
+                $activeSheet = $spreadsheet->getActiveSheet();
+                $rowss = 2;
+
+                $activeSheet->setCellValue('A1', 'Titre');
+                $activeSheet->setCellValue('B1', 'Année');
+                $activeSheet->setCellValue('C1', 'Auteur');
+                $activeSheet->setCellValue('D1', 'Publiée');
+                $activeSheet->setCellValue('E1', 'Image');
+
+
+
+                $activeSheet->setCellValue('A'.$rowss, $movie['title']);
+                $activeSheet->setCellValue('B'.$rowss, $movie['year']);
+                $activeSheet->setCellValue('C'.$rowss, $movie['user_id']);
+                $activeSheet->setCellValue('D'.$rowss, $movie['published']);
+                $activeSheet->setCellValue('E'.$rowss, $movie['image']);
+
+            }
             $rows++;
         }
 
