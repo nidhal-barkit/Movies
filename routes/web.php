@@ -15,7 +15,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/mymovies', 'MyMovieController');
     Route::resource('/movies', 'MovieController');
     Route::resource('/users', 'UserController');
-    Route::get('/excel', 'ExcelController@export')->name('export');
+    Route::get('/excel', 'PhpSpreedSheetController@export')->name('export');
+
     Route::post('/import', 'ExcelController@import')->name('import');
 });
 
