@@ -6,7 +6,9 @@ use App\Type;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Movie;
+use Prologue\Alerts\Facades\Alert;
 
 class PhpSpreedSheetController extends Controller
 {
@@ -20,7 +22,7 @@ class PhpSpreedSheetController extends Controller
 
         foreach($types as $t){
 
-            $spreadsheet->createSheet();
+
             $myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, $t->type);
             $spreadsheet->addSheet($myWorkSheet, 0);
 
@@ -66,16 +68,62 @@ class PhpSpreedSheetController extends Controller
 
     public function import(Request $request){
 
-        $inputFileName = $request->get('file');
+        $inputFileName = $request->file('file');
 
-        /**  Identify the type of $inputFileName  **/
         $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
-        /**  Create a new Reader of the type that has been identified  **/
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
-        /**  Load $inputFileName to a Spreadsheet Object  **/
+        $spread = $reader->load($inputFileName);
+        $Excel_writer = new Xlsx($spread);
+
+        $save_path = public_path("imports");
+        if (! file_exists($save_path) && ! mkdir($save_path, 0777, true) && ! is_dir($save_path)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $save_path));
+        }
+        $id = uniqid();
+        $Excel_writer->save($save_path.'/movies-'.$id.'.xlsx');
+
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $reader->setReadDataOnly(true);
         $spreadsheet = $reader->load($inputFileName);
+        $reader->setLoadAllSheets();
 
-        return redirect('/movies');
+        $sheetCount = $spreadsheet->getSheetCount();
+        for ($i = 10; $i < $sheetCount; $i++) {
+            $sheet = $spreadsheet->getSheet($i);
 
+            $sheetData = $sheet->toArray(null, true, true, true);
+
+            for ($ii = 2; $ii < count($sheetData); $ii++){
+                $movie = new Movie();
+                $movie->title = $sheetData[$ii]['A'];
+                $movie->year = $sheetData[$ii]['B'];
+                $movie->user_id = $sheetData[$ii]['C'];
+                $movie->published = $sheetData[$ii]['D'];
+                $movie->image = $sheetData[$ii]['E'];
+                $movie->save();
+
+            }
+
+
+        }
+
+
+
+
+        Alert::success('Importation avec succés')->flash();
+        return redirect()->route('movies.index');
+
+    }
+
+    public function emptyRow($row)
+    {
+        $lenght = count($row);
+        for ($i = 0; $i < $lenght; $i++) {
+            if ($row[$i] !== null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
