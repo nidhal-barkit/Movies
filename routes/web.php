@@ -15,9 +15,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/mymovies', 'MyMovieController');
     Route::resource('/movies', 'MovieController');
     Route::resource('/users', 'UserController');
-    Route::get('/excel', 'PhpSpreedSheetController@export')->name('export');
 
-    Route::post('/import', 'ExcelController@import')->name('import');
+    Route::get('/excel', 'PhpSpreedSheetController@export')->name('export');
+    Route::post('/import', 'PhpSpreedSheetController@import')->name('import');
+
+    //Route::post('/import', 'ExcelController@import')->name('import');
 });
 
 Route::get('Usermovies/{user_id}', 'Api\v1\ApiMovieController@getUserMovies')->name('usermovies');

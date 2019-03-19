@@ -86,18 +86,21 @@ class UserController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/users/'.$id.'/edit');
+        return redirect()->route('users.edit', [$id]);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Request $request , User $user)
     {
-        //
+        $user = User::where('id',$request->get('id'))->get()->first();
+        if($user->delete())
+        {
+
+            Alert::success('Utilisateur a été supprimé avec succés')->flash();
+        }else{
+            Alert::warning('erreur')->flash();
+        }
+        return redirect()->route('users.index');
     }
 }

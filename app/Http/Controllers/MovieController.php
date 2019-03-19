@@ -35,6 +35,7 @@ class MovieController extends Controller
     {
         $movies = Movie::all();
         return view('movies.index', compact('movies'));
+
     }
 
 
@@ -50,7 +51,6 @@ class MovieController extends Controller
 
     public function store(Request $request)
     {
-
         $movie = new Movie();
         $movie->title = $request->get('titre');
         $movie->year = $request->get('year');
@@ -60,7 +60,6 @@ class MovieController extends Controller
         }else{
             $movie->published = 0;
         }
-
         if ($request->hasFile('image')) {
             $id = uniqid();
             $image = $request->file('image');
@@ -72,17 +71,12 @@ class MovieController extends Controller
             $img->resize(500, 500, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$input['image']);
-
-
-
             $date =  new \DateTime();
             $movie->image ='/images/'.$filename.'?v='.$date->getTimestamp();
-
         }
 
         if($movie->save())
         {
-
             $types_array = $request->get('types');
             $movie->types()->attach($types_array);
 
@@ -90,7 +84,7 @@ class MovieController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/movies');
+        return redirect()->route('movies.index');
     }
 
     public  function edit($id){
@@ -101,7 +95,6 @@ class MovieController extends Controller
 
     public function update(Request $request , $id)
     {
-
         $movie = Movie::find($id);
         $this->authorize('update' , $movie);
         $movie->title = $request->get('titre');
@@ -113,28 +106,22 @@ class MovieController extends Controller
         }
 
         if ($request->hasFile('image') != null) {
-
             if ($movie->image != null){
                 $url= explode('?', $movie->image);
                 $part1 = $url[0];
                 unlink(public_path($part1));
             }
-
-
             $idd = uniqid();
             $image = $request->file('image');
             $filename = $idd.'.'.$image->getClientOriginalExtension();
             $input ['image'] = $idd.'.'.$image->getClientOriginalExtension();
             $img =\Image::make($image->getRealPath());
             $destinationPath = public_path('/images');
-
             $img->resize(500, 500, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$input['image']);
-
             $date =  new \DateTime();
             $movie->image ='/images/'.$filename.'?v='.$date->getTimestamp();
-
         }
 
         if($movie->save())
@@ -145,7 +132,7 @@ class MovieController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/movies/'.$id.'/edit');
+        return redirect()->route('movies.edit', [$id]);
     }
 
     public  function destroy(Request $request , Movie $movie){
@@ -160,6 +147,8 @@ class MovieController extends Controller
 
         if($movie->delete())
         {
+            $movie_type = MovieType::where('movie_id','=',$movie->id)->first();
+            $movie_type->delete();
             $data =array(
                 'name' => $movie->title,
                 'image' => $movie->image,
@@ -171,7 +160,7 @@ class MovieController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/movies');
+        return redirect()->route('movies.index');
 
     }
 }

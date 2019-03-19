@@ -25,7 +25,7 @@ class ExcelController extends Controller
     {
         Excel::import(new MovieImport,request()->file('file'));
         Alert::success('Importation avec succés')->flash();
-        return back();
+        return redirect()->route('movies.index');
     }
 
 

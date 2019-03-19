@@ -139,7 +139,8 @@ class MyMovieController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/mymovies/'.$id.'/edit');
+        return redirect()->route('mymovies.edit', [$id]);
+
     }
 
     public  function destroy(Request $request){
@@ -153,7 +154,8 @@ class MyMovieController extends Controller
         }else{
             Alert::warning('erreur')->flash();
         }
-        return redirect('/mymovies');
+
+        return redirect()->route('mymovies.index');
 
     }
 }
