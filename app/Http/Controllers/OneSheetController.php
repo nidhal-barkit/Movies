@@ -24,22 +24,22 @@ class OneSheetController extends Controller
         $filename ='Movies';
 
         $movies= Movie::all();
-            foreach($movies as $movie)
-            {
+        foreach($movies as $movie)
+        {
 
-                $activeSheet->setCellValue('A1', 'Titre');
-                $activeSheet->setCellValue('B1', 'Année');
-                $activeSheet->setCellValue('C1', 'Auteur');
-                $activeSheet->setCellValue('D1', 'Publiée');
-                $activeSheet->setCellValue('E1', 'Image');
+            $activeSheet->setCellValue('A1', 'Titre');
+            $activeSheet->setCellValue('B1', 'Année');
+            $activeSheet->setCellValue('C1', 'Auteur');
+            $activeSheet->setCellValue('D1', 'Publiée');
+            $activeSheet->setCellValue('E1', 'Image');
 
-                $activeSheet->setCellValue('A'.$row, $movie['title']);
-                $activeSheet->setCellValue('B'.$row, $movie['year']);
-                $activeSheet->setCellValue('C'.$row, $movie['user_id']);
-                $activeSheet->setCellValue('D'.$row, $movie['published']);
-                $activeSheet->setCellValue('E'.$row, $movie['image']);
-                $row++;
-            }
+            $activeSheet->setCellValue('A'.$row, $movie['title']);
+            $activeSheet->setCellValue('B'.$row, $movie['year']);
+            $activeSheet->setCellValue('C'.$row, $movie['user_id']);
+            $activeSheet->setCellValue('D'.$row, $movie['published']);
+            $activeSheet->setCellValue('E'.$row, $movie['image']);
+            $row++;
+        }
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.Xlsx"'); /*-- $filename is  xsl filename ---*/
         header('Cache-Control: max-age=0');
@@ -90,9 +90,6 @@ class OneSheetController extends Controller
 
 
         }
-
-
-
 
         Alert::success('Importation avec succés')->flash();
         return redirect()->route('movies.index');

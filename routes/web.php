@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::post('/import', 'ExcelController@import')->name('import');
 });
 
+
 Route::get('Usermovies/{user_id}', 'Api\v1\ApiMovieController@getUserMovies')->name('usermovies');
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Auth::routes();
