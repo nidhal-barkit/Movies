@@ -106,11 +106,11 @@ class MovieController extends Controller
         }
 
         if ($request->hasFile('image') != null) {
-            if ($movie->image != null){
+            /*if ($movie->image != null){
                 $url= explode('?', $movie->image);
                 $part1 = $url[0];
                 unlink(public_path($part1));
-            }
+            }*/
             $idd = uniqid();
             $image = $request->file('image');
             $filename = $idd.'.'.$image->getClientOriginalExtension();
@@ -144,9 +144,11 @@ class MovieController extends Controller
         {
             MovieType::where('movie_id',$movie->id)->delete();
 
-            $url= explode('?', $movie->image);
+            /*
+             $url= explode('?', $movie->image);
             $part1 = $url[0];
             unlink(public_path($part1));
+            */
 
             $data =array(
                 'name' => $movie->title,
