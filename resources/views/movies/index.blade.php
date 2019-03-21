@@ -16,7 +16,7 @@
                     <a href="/movies/create"> <button class="btn btn-primary mb-2">Ajouter un film</button></a>
                 @endif
                     @if(Auth::user()->getRole() == "Admin")
-                        <a href="/excel">
+                        <a href="/excelonesheet">
                         <button type="button" class="btn btn-dark mb-2">Export</button>
                         </a>
                         <button type="button" class="btn btn-primary mb-2 ml-4" data-toggle="modal" data-target="#myModal">Import</button>
@@ -82,7 +82,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Modal Header</h4>
                 </div>
-                <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('importonesheet') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 <div class="modal-body">
                         <input type="file" name="file" class="form-control">

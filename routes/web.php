@@ -19,6 +19,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/excel', 'PhpSpreedSheetController@export')->name('export');
     Route::post('/import', 'PhpSpreedSheetController@import')->name('import');
 
+
+    Route::get('/excelonesheet', 'OneSheetController@export')->name('excelonesheet');
+    Route::post('/importonesheet', 'OneSheetController@import')->name('importonesheet');
+
     //Route::post('/import', 'ExcelController@import')->name('import');
 });
 
