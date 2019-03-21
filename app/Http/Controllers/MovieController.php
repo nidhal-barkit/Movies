@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Image;
 use Illuminate\Support\Facades\Mail;
-
+use Barryvdh\DomPDF\Facade as PDF;
 
 class MovieController extends Controller
 {
@@ -163,6 +163,21 @@ class MovieController extends Controller
             Alert::warning('erreur')->flash();
         }
         return redirect()->route('movies.index');
+
+    }
+
+
+
+    public function generatePDF()
+    {
+
+        $movies =  Movie::all();
+        $pdf = PDF::loadView('myPDF' ,$movies);
+        dd($pdf);
+        // If you want to store the generated pdf to the server then you can use the store function
+        $pdf->save(public_path().'/imports/pdfs/movie.pdf');
+        // Finally, you can download the file using download function
+        return $pdf->download('movie.pdf');
 
     }
 }
