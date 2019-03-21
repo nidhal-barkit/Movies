@@ -29,7 +29,7 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->from('nidhalbarkit@gmail.com')->subject('votre film a été supprimé')
+        return $this->from('voirfilm@contact.com')->subject('votre film a été supprimé')
             ->view('template')->with('data',$this->data);
     }
 }

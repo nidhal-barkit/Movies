@@ -139,22 +139,22 @@ class MovieController extends Controller
 
         $this->authorize('delete' , $movie);
         $movie = Movie::where('id',$request->get('id'))->get()->first();
-        if ($movie->image != null){
-            $url= explode('?', $movie->image);
-            $part1 = $url[0];
-            unlink(public_path($part1));
-        }
 
         if($movie->delete())
         {
-            $movie_type = MovieType::where('movie_id','=',$movie->id)->first();
-            $movie_type->delete();
+            MovieType::where('movie_id',$movie->id)->delete();
+
+            $url= explode('?', $movie->image);
+            $part1 = $url[0];
+            unlink(public_path($part1));
+
             $data =array(
                 'name' => $movie->title,
                 'image' => $movie->image,
                 'username' => $movie->getUserName(),
                 'message' => 'Votre film a été supprimé',
             );
+
             Mail::to($movie->getUserMail())->send(new SendMail($data));
             Alert::success('Film a été supprimé avec succés')->flash();
         }else{
