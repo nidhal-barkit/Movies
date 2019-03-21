@@ -88,18 +88,19 @@ class PhpSpreedSheetController extends Controller
         $reader->setLoadAllSheets();
 
         $sheetCount = $spreadsheet->getSheetCount();
-        for ($i = 10; $i < $sheetCount; $i++) {
+        for ($i = 0; $i < $sheetCount; $i++) {
             $sheet = $spreadsheet->getSheet($i);
 
             $sheetData = $sheet->toArray(null, true, true, true);
 
-            for ($ii = 2; $ii < count($sheetData); $ii++){
+            for ($ii = 1; $ii < count($sheetData); $ii++){
+
                 $movie = new Movie();
-                $movie->title = $sheetData[$ii]['A'];
-                $movie->year = $sheetData[$ii]['B'];
-                $movie->user_id = $sheetData[$ii]['C'];
-                $movie->published = $sheetData[$ii]['D'];
-                $movie->image = $sheetData[$ii]['E'];
+                $movie->title = $sheetData[2]['A'];
+                $movie->year = $sheetData[2]['B'];
+                $movie->user_id = $sheetData[2]['C'];
+                $movie->published = $sheetData[2]['D'];
+                $movie->image = $sheetData[2]['E'];
                 $movie->save();
 
             }
