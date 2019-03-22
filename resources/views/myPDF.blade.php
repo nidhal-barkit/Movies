@@ -41,7 +41,6 @@
                 @foreach($movies as $key => $movie)
                 <div>
                     <img src="{{asset($movie->image)}}" alt>
-                    <b>{{$movie->title}}</b>
                 </div>
                 @endforeach
             </header>

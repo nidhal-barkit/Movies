@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Image;
 use Illuminate\Support\Facades\Mail;
-use PDF;
+use mikehaertl\wkhtmlto\Pdf;
 
 class MovieController extends Controller
 {
@@ -168,18 +168,31 @@ class MovieController extends Controller
 
 
 
-    public function generatePDF (Request $request)
+    public function generatePDF ()
     {
-        $movies =  Movie::all();
-        view()->share('movies',$movies);
+        $pdf = new Pdf([
+            'binary'         => config('app.wkhtmltox.pdf'),
+            'ignoreWarnings' => true,
+            'commandOptions' => ['useExec' => true],
+        ]);
 
-        if($request->has('download')) {
-            // pass view file
-            $pdf = PDF::loadView('myPDF');
-            // download pdf
-            return $pdf->download('movies.pdf');
+        $movies = Movie::all();
+        $pdf->addPage(view('myPDF',['movies' => $movies]));
+
+        $file_name = 'movies - 2019 - '.uniqid().'.pdf';
+        $save_path = public_path("/generation/");
+        if (! file_exists($save_path) && ! mkdir($save_path, 0777, true) && ! is_dir($save_path)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $save_path));
         }
-        return view('myPDF');
+        $pdf->saveAs($save_path . $file_name);
+        $pdf->send($file_name);
+
+        return [
+            'generated_movies' => empty($pdf->getError()),
+            'url'              => empty($pdf->getError()) ? "/generation/$file_name" : null,
+            'file_name'        => $file_name,
+            'errors_movies'    => ! empty($pdf->getError()) ? utf8_encode($pdf->getError()) : null
+        ];
 
     }
 }

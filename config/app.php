@@ -108,6 +108,10 @@ return [
 
     'faker_locale' => 'en_US',
 
+    'wkhtmltox' => [
+        'pdf' => env('PATH_PDF', false)
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -177,7 +181,6 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Prologue\Alerts\AlertsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
 
     ],
 
@@ -232,7 +235,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Alert' => Prologue\Alerts\Facades\Alert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+
 
 
 
