@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hi</title>
+    <title>Movies- PDF</title>
+    <style>
+        body { margin: 0; background: #333; }
+        header {
+            padding: .5vw;
+            font-size: 0;
+            display: -ms-flexbox;
+            -ms-flex-wrap: wrap;
+            -ms-flex-direction: column;
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            display: -webkit-box;
+            display: flex;
+        }
+        header div {
+            -webkit-box-flex: auto;
+            -ms-flex: auto;
+            flex: auto;
+            width: 200px;
+            margin: .5vw;
+        }
+        header div img {
+            width: 100%;
+            height: auto;
+        }
+        @media screen and (max-width: 400px) {
+            header div { margin: 0; }
+            header { padding: 0; }
+
+        }
+    </style>
 </head>
 <body>
-<div class="container page-top">
-    <div class="row">
-        @foreach ($movies  as $m)
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <img  src="{{asset($m->image)}}" alt="">
-            </div>
-        @endforeach
+<div class="container">
+    <div class="content">
+        <div class="row col-md-12">
+            <header>
+                @foreach($movies as $key => $movie)
+                <div>
+                    <img src="{{asset($movie->image)}}" alt>
+                    <b>{{$movie->title}}</b>
+                </div>
+                @endforeach
+            </header>
+
+        </div>
     </div>
 </div>
 </body>

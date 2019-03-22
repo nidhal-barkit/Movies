@@ -20,7 +20,7 @@
                         <button type="button" class="btn btn-dark mb-2">Export</button>
                         </a>
                         <button type="button" class="btn btn-primary mb-2 ml-4" data-toggle="modal" data-target="#myModal">Import</button>
-                        <a href="/pdf">
+                        <a href="{{ route('generate-pdf',['download'=>'pdf']) }}">
                             <button type="button" class="btn btn-danger mb-2 ml-4">Fichier PDF</button>
                         </a>
                     @endif
