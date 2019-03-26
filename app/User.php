@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\Role;
 
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -48,6 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Role');
     }
+
+
+
 
 
 }
